@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Page introuvable{% endblock %}
+{% block heading %}Page introuvable{% endblock %}
+{% block content %}
+<div class="empty-state error-state"><div class="error-code">404</div><h2>Cette tâche n'existe pas</h2><p>L'identifiant demandé ne correspond à aucune tâche disponible.</p><a class="button button-primary" href="{{ url_for('index') }}">Retour au tableau de bord</a></div>
+{% endblock %}

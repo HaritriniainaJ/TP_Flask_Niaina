@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Mes tâches{% endblock %}
+{% block heading %}Mes tâches{% endblock %}
+{% block content %}
+<div class="welcome-row">
+    <div><h2>Bonjour, Haritriniaina.</h2><p>Voici un aperçu de ton organisation aujourd'hui.</p></div>
+    <span class="date-chip">ESPACE DE TRAVAIL</span>
+</div>
+
+<div class="stats-grid">
+    <article class="stat-card"><span class="stat-icon violet">▦</span><span class="stat-label">Toutes les tâches</span><strong>{{ total }}</strong><small>Enregistrées dans la liste</small></article>
+    <article class="stat-card"><span class="stat-icon orange">◷</span><span class="stat-label">À réaliser</span><strong>{{ restantes }}</strong><small>Encore en cours</small></article>
+    <article class="stat-card"><span class="stat-icon green">✓</span><span class="stat-label">Terminées</span><strong>{{ terminees }}</strong><small>Déjà accomplies</small></article>
+</div>
+
+<div class="section-heading"><div><h2>Liste des tâches</h2><p>Consulte et organise tes activités.</p></div></div>
+
+<form class="search-form" action="{{ url_for('index') }}" method="get">
+    <label class="search-box"><span>⌕</span><input type="search" name="q" value="{{ recherche }}" placeholder="Rechercher une tâche..."></label>
+    <input type="hidden" name="filtre" value="{{ filtre }}">
+    <button class="button button-light" type="submit">Rechercher</button>
+</form>
+
+<nav class="filter-tabs" aria-label="Filtres">
+    <a class="{% if filtre == 'toutes' %}selected{% endif %}" href="{{ url_for('index', filtre='toutes', q=recherche) }}">Toutes</a>
+    <a class="{% if filtre == 'actives' %}selected{% endif %}" href="{{ url_for('index', filtre='actives', q=recherche) }}">À faire</a>
+    <a class="{% if filtre == 'terminees' %}selected{% endif %}" href="{{ url_for('index', filtre='terminees', q=recherche) }}">Terminées</a>
+</nav>
+
+<div class="task-list">
+{% for tache in taches %}
+    <article class="task-card">
+        <form action="{{ url_for('basculer', identifiant=tache.id) }}" method="post">
+            <button class="check-button {% if tache.terminee %}checked{% endif %}" type="submit" aria-label="Changer le statut">{% if tache.terminee %}✓{% endif %}</button>
+        </form>
+        <div class="task-main">
+            <a class="task-title {% if tache.terminee %}done{% endif %}" href="{{ url_for('detail', identifiant=tache.id) }}">{{ tache.titre }}</a>
+            <p>{{ tache.description or "Aucune description fournie." }}</p>
+            <div class="task-meta"><span class="priority priority-{{ tache.priorite|lower }}">{{ tache.priorite }}</span><span>ID #{{ tache.id }}</span></div>
+        </div>
+        <div class="task-actions">
+            <a class="text-action" href="{{ url_for('detail', identifiant=tache.id) }}">Détails ↗</a>
+            <form action="{{ url_for('supprimer', identifiant=tache.id) }}" method="post" onsubmit="return confirm('Supprimer cette tâche ?')">
+                <button class="delete-action" type="submit" aria-label="Supprimer">×</button>
+            </form>
+        </div>
+    </article>
+{% else %}
+    <div class="empty-state"><div class="empty-icon">⌕</div><h3>Aucune tâche trouvée</h3><p>Modifie ton filtre ou ajoute une nouvelle tâche.</p><a class="button button-primary" href="{{ url_for('ajouter') }}">Créer une tâche</a></div>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}TaskFlow{% endblock %} | Haritriniaina</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <a class="brand" href="{{ url_for('index') }}">
+            <span class="brand-mark">T</span>
+            <span>TaskFlow<small>ESPACE PERSONNEL</small></span>
+        </a>
+        <p class="nav-caption">MENU PRINCIPAL</p>
+        <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}">
+            <span>▦</span> Tableau de bord
+        </a>
+        <a class="nav-link {% if request.endpoint == 'ajouter' %}active{% endif %}" href="{{ url_for('ajouter') }}">
+            <span>＋</span> Nouvelle tâche
+        </a>
+        <div class="sidebar-bottom">
+            <div class="profile-avatar">H</div>
+            <div class="profile-text"><strong>Haritriniaina</strong><small>Étudiant</small></div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div><span class="eyebrow">ORGANISATION PERSONNELLE</span><h1>{% block heading %}Tableau de bord{% endblock %}</h1></div>
+            <a class="button button-primary" href="{{ url_for('ajouter') }}">＋ Nouvelle tâche</a>
+        </header>
+
+        <section class="content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-list">
+                    {% for categorie, message in messages %}
+                        <div class="flash {{ categorie }}">{{ message }}</div>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </section>
+        <footer>TaskFlow <span>·</span> TP Python &amp; Flask</footer>
+    </main>
+</div>
+</body>
+</html>

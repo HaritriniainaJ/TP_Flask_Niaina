@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Détail de la tâche{% endblock %}
+{% block heading %}Détail de la tâche{% endblock %}
+{% block content %}
+<a class="back-link" href="{{ url_for('index') }}">← Retour à la liste</a>
+<article class="detail-card">
+    <div class="detail-top"><span class="priority priority-{{ tache.priorite|lower }}">{{ tache.priorite }}</span><span class="detail-id">TÂCHE #{{ tache.id }}</span></div>
+    <h2 class="{% if tache.terminee %}done{% endif %}">{{ tache.titre }}</h2>
+    <p>{{ tache.description or "Aucune description fournie." }}</p>
+    <div class="detail-status"><span>Statut</span><strong>{% if tache.terminee %}Terminée{% else %}À réaliser{% endif %}</strong></div>
+    <form action="{{ url_for('basculer', identifiant=tache.id) }}" method="post"><button class="button button-primary" type="submit">{% if tache.terminee %}Réactiver la tâche{% else %}Marquer comme terminée{% endif %}</button></form>
+</article>
+{% endblock %}

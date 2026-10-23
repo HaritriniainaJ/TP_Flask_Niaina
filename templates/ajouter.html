@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Nouvelle tâche{% endblock %}
+{% block heading %}Nouvelle tâche{% endblock %}
+{% block content %}
+<div class="form-intro"><a class="back-link" href="{{ url_for('index') }}">← Retour aux tâches</a><h2>Ajouter une activité</h2><p>Décris ce que tu souhaites accomplir et choisis son niveau de priorité.</p></div>
+<form class="task-form" method="post" action="{{ url_for('ajouter') }}">
+    <div class="form-field">
+        <label for="titre">Titre de la tâche <span>*</span></label>
+        <input id="titre" name="titre" type="text" maxlength="100" required value="{{ titre }}" placeholder="Ex. Terminer le TP Flask">
+        <small>100 caractères maximum.</small>
+    </div>
+    <div class="form-field">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="5" placeholder="Ajoute quelques détails...">{{ description }}</textarea>
+    </div>
+    <fieldset class="form-field priority-field">
+        <legend>Priorité</legend>
+        <div class="priority-options">
+            {% for choix in ["Basse", "Normale", "Haute"] %}
+            <label class="priority-choice">
+                <input type="radio" name="priorite" value="{{ choix }}" {% if priorite == choix %}checked{% endif %}>
+                <span>{{ choix }}</span>
+            </label>
+            {% endfor %}
+        </div>
+    </fieldset>
+    <div class="form-footer"><a class="button button-light" href="{{ url_for('index') }}">Annuler</a><button class="button button-primary" type="submit">Créer la tâche →</button></div>
+</form>
+{% endblock %}

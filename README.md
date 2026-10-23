@@ -1,19 +1,20 @@
-# Haritriniaina - Gestionnaire de tâches
+# TaskFlow — Gestionnaire de tâches
 
-Application web développée avec Python et Flask dans le cadre d un TP.
+Projet pédagogique réalisé avec Python, Flask, Jinja2, HTML et CSS.
 
-## Technologies
-- Python
-- Flask
-- HTML
-- CSS
-- Git et GitHub
+## Fonctionnalités
+- Affichage et détail des tâches
+- Ajout avec validation côté serveur
+- Détection des titres en double
+- Priorités et statut terminé / à faire
+- Recherche et filtres
+- Messages flash et filtre mémorisé en session
+- Page 404 personnalisée
 
-## Installation
+## Lancer le projet
+1. Activer l'environnement : `source .venv/bin/activate`
+2. Installer Flask : `python -m pip install Flask`
+3. Lancer l'application : `python app.py`
+4. Ouvrir `http://127.0.0.1:5000`
 
-1. Créer un environnement virtuel : python3 -m venv .venv
-2. Activer l environnement : source .venv/bin/activate
-3. Installer Flask : pip install Flask
-
-## Lancement
-Les instructions seront complétées pendant le développement.
+Les tâches sont conservées en mémoire pendant l'exécution : elles sont réinitialisées au redémarrage. Ce choix reste adapté aux exercices sur les routes, les formulaires, Jinja2, flash et session.
